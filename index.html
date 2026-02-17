@@ -5,254 +5,213 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EduWarrior Premium</title>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-
 <style>
 body{
   margin:0;
   font-family:'Segoe UI',sans-serif;
   background: radial-gradient(circle at top,#0f172a,#020617);
   color:#fff;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:50px 20px;
   text-align:center;
 }
-.container{max-width:900px;margin:auto;padding:40px 20px;}
-.hero h1{font-size:38px;}
-.hero span{color:#f59e0b;}
+
+h1{
+  font-size:42px;
+  margin-bottom:10px;
+}
+
+h1 span{
+  color:#f59e0b;
+}
+
+.subtitle{
+  opacity:.7;
+  margin-bottom:50px;
+}
+
+.pricing{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:25px;
+}
+
 .card{
   background:rgba(255,255,255,.05);
-  padding:30px;
+  backdrop-filter:blur(15px);
   border-radius:20px;
-  margin-top:30px;
+  padding:30px;
+  width:260px;
+  box-shadow:0 0 30px rgba(0,0,0,.5);
+  transition:.3s;
+  position:relative;
 }
-input{
-  width:100%;
-  padding:14px;
+
+.card:hover{
+  transform:translateY(-8px);
+}
+
+.popular{
+  border:2px solid #f59e0b;
+}
+
+.popular-badge{
+  position:absolute;
+  top:-12px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#f59e0b;
+  color:#000;
+  padding:6px 12px;
+  font-size:12px;
+  border-radius:20px;
+  font-weight:bold;
+}
+
+.price{
+  font-size:36px;
+  margin:20px 0;
+  color:#f59e0b;
+}
+
+ul{
+  list-style:none;
+  padding:0;
+  text-align:left;
+  margin:20px 0;
+}
+
+ul li{
   margin:10px 0;
-  border-radius:10px;
-  border:none;
-  background:#111827;
-  color:#fff;
+  opacity:.8;
 }
+
 button{
   width:100%;
-  padding:15px;
+  padding:12px;
   border:none;
   border-radius:12px;
   background:linear-gradient(90deg,#f59e0b,#fbbf24);
   color:#000;
   font-weight:bold;
   cursor:pointer;
+  font-size:15px;
 }
-.upload-box{
-  border:2px dashed rgba(255,255,255,.2);
-  padding:40px;
-  border-radius:15px;
-  cursor:pointer;
-  margin-top:15px;
+
+button:hover{
+  opacity:.9;
 }
-.alert{
-  background:#3b0a0a;
-  color:#ff6b6b;
-  padding:12px;
-  border-radius:10px;
-  margin-bottom:15px;
+
+footer{
+  margin-top:60px;
+  text-align:center;
+  opacity:.5;
+  font-size:14px;
 }
-#viewer{
-  margin-top:30px;
-  position:relative;
+
+@media(max-width:768px){
+  .pricing{
+    flex-direction:column;
+    align-items:center;
+  }
 }
-canvas{
-  max-width:100%;
-  margin-bottom:20px;
-}
-.watermark{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:40px;
-  color:rgba(255,255,255,0.08);
-  transform:rotate(-30deg);
-}
-.hidden{display:none;}
 </style>
+
 </head>
 <body>
 
 <div class="container">
 
-<div class="hero">
-<h1>Premium B.Ed <span>Study Materials</span></h1>
-<p>Secure • Encrypted • Device-Bound</p>
+<h1>Premium B.Ed <span>Study Packages</span></h1>
+<p class="subtitle">
+Choose your package and unlock secure educational content instantly.
+</p>
+
+<div class="pricing">
+
+  <!-- BASIC -->
+  <div class="card">
+    <h3>Basic Package</h3>
+    <div class="price">₹129</div>
+    <ul>
+      <li>✔ B.Ed Notes</li>
+      <li>✔ Important Questions</li>
+      <li>✔ Mobile Friendly</li>
+      <li>✖ Circulars</li>
+      <li>✖ Model Question Papers</li>
+    </ul>
+    <button onclick="buyPackage('Basic',129)">Get Access</button>
+  </div>
+
+  <!-- STANDARD -->
+  <div class="card">
+    <h3>Standard Package</h3>
+    <div class="price">₹139</div>
+    <ul>
+      <li>✔ B.Ed Notes</li>
+      <li>✔ Important Questions</li>
+      <li>✔ Circulars</li>
+      <li>✔ Mobile Friendly</li>
+      <li>✖ Model Question Papers</li>
+    </ul>
+    <button onclick="buyPackage('Standard',139)">Get Access</button>
+  </div>
+
+  <!-- PREMIUM (MOST POPULAR) -->
+  <div class="card popular">
+    <div class="popular-badge">Most Popular</div>
+    <h3>Premium Package</h3>
+    <div class="price">₹149</div>
+    <ul>
+      <li>✔ B.Ed Notes</li>
+      <li>✔ Important Questions</li>
+      <li>✔ Circulars</li>
+      <li>✔ Model Question Papers</li>
+      <li>✔ Mobile Friendly</li>
+    </ul>
+    <button onclick="buyPackage('Premium',149)">Get Access</button>
+  </div>
+
+  <!-- ULTIMATE -->
+  <div class="card">
+    <h3>Ultimate Package</h3>
+    <div class="price">₹159</div>
+    <ul>
+      <li>✔ All Premium Features</li>
+      <li>✔ Bonus Study Materials</li>
+      <li>✔ Future Updates</li>
+      <li>✔ Priority Support</li>
+      <li>✔ Mobile Friendly</li>
+    </ul>
+    <button onclick="buyPackage('Ultimate',159)">Get Access</button>
+  </div>
+
 </div>
 
-<div class="card">
-
-<h3>Get Book - ₹149</h3>
-<input type="text" id="name" placeholder="Full Name">
-<input type="text" id="phone" placeholder="Phone Number">
-<button onclick="generateFile()">Download Book</button>
-<div id="codeDisplay"></div>
-
-<hr style="margin:30px 0;opacity:.2">
-
-<h3>Open Book</h3>
-<div id="alertBox" class="alert hidden"></div>
-
-<label class="upload-box">
-<input type="file" id="fileInput" hidden onchange="openFile()">
-Select .bedx File
-</label>
-
-</div>
-
-<div id="viewer"></div>
+<footer>
+© 2025 EduWarrior Premium • Secure • Device Bound • Encrypted
+</footer>
 
 </div>
 
 <script>
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+function buyPackage(packageName, amount){
 
-const MASTER_SECRET="BED_SECRET_2025_PRIVATE";
+  const message = 
+`Hello Admin,
+I want to purchase ${packageName} Package.
+Amount: ₹${amount}
+Please share payment details.`;
 
-document.addEventListener("contextmenu", e=>e.preventDefault());
-
-function getDeviceID(){
-return btoa(navigator.userAgent+screen.width+screen.height);
-}
-
-function generateCode(){
-let c="";for(let i=0;i<16;i++){c+=Math.floor(Math.random()*10);}
-return c;
-}
-
-async function sha256(text){
-return await crypto.subtle.digest("SHA-256",new TextEncoder().encode(text));
-}
-
-async function generateFile(){
-const name=document.getElementById("name").value;
-const phone=document.getElementById("phone").value;
-if(!name||!phone){alert("Enter details");return;}
-
-const deviceID=getDeviceID();
-const code=generateCode();
-
-const master=await fetch("master.bedx").then(r=>r.text());
-const m=JSON.parse(master);
-
-const masterKey=await crypto.subtle.importKey("raw",
-await sha256(MASTER_SECRET),
-{name:"AES-GCM"},false,["decrypt"]);
-
-const pdf=await crypto.subtle.decrypt(
-{name:"AES-GCM",iv:new Uint8Array(m.iv)},
-masterKey,new Uint8Array(m.data));
-
-const personalKey=await crypto.subtle.importKey("raw",
-await sha256(code+deviceID),
-{name:"AES-GCM"},false,["encrypt"]);
-
-const iv=crypto.getRandomValues(new Uint8Array(12));
-const encrypted=await crypto.subtle.encrypt(
-{name:"AES-GCM",iv},personalKey,pdf);
-
-const fileData={
-iv:Array.from(iv),
-data:Array.from(new Uint8Array(encrypted)),
-code,deviceID,name,phone
-};
-
-const blob=new Blob([JSON.stringify(fileData)],{type:"application/octet-stream"});
-const a=document.createElement("a");
-a.href=URL.createObjectURL(blob);
-a.download="BEd_"+code+".bedx";
-a.click();
-
-document.getElementById("codeDisplay").innerHTML=
-"<br>Your Code: <b>"+code+"</b><br>Send to admin & pay ₹149";
-
-window.open(
-"https://wa.me/91YOURNUMBER?text="+encodeURIComponent(
-`Name:${name}\nPhone:${phone}\nCode:${code}\nPaid ₹149`),
-"_blank");
-}
-
-async function openFile(){
-
-const alertBox=document.getElementById("alertBox");
-alertBox.classList.add("hidden");
-
-const file=document.getElementById("fileInput").files[0];
-if(!file)return;
-
-const json=JSON.parse(await file.text());
-
-if(json.deviceID!==getDeviceID()){
-alertBox.innerText="This file is not for this device.";
-alertBox.classList.remove("hidden");
-return;
-}
-
-const codes=await fetch("codes.json").then(r=>r.json());
-const found=codes.find(c=>c.code.trim()===json.code.trim());
-
-if(!found||!found.approved){
-alertBox.innerText="Payment not approved.";
-alertBox.classList.remove("hidden");
-return;
-}
-
-const key=await crypto.subtle.importKey("raw",
-await sha256(json.code+json.deviceID),
-{name:"AES-GCM"},false,["decrypt"]);
-
-let decrypted;
-try{
-decrypted=await crypto.subtle.decrypt(
-{name:"AES-GCM",iv:new Uint8Array(json.iv)},
-key,new Uint8Array(json.data));
-}catch{
-alertBox.innerText="Cannot open this file.";
-alertBox.classList.remove("hidden");
-return;
-}
-
-renderPDF(new Uint8Array(decrypted), json);
-}
-
-async function renderPDF(data, json){
-
-const viewer=document.getElementById("viewer");
-viewer.innerHTML="";
-
-const loadingTask=pdfjsLib.getDocument({data});
-const pdf=await loadingTask.promise;
-
-for(let pageNum=1;pageNum<=pdf.numPages;pageNum++){
-const page=await pdf.getPage(pageNum);
-const viewport=page.getViewport({scale:1.3});
-
-const canvas=document.createElement("canvas");
-const context=canvas.getContext("2d");
-canvas.height=viewport.height;
-canvas.width=viewport.width;
-
-viewer.appendChild(canvas);
-
-await page.render({canvasContext:context,viewport}).promise;
-}
-
-const watermark=document.createElement("div");
-watermark.className="watermark";
-watermark.innerText=`${json.name} | ${json.phone} | ${json.code}`;
-viewer.appendChild(watermark);
+  window.open(
+    "https://wa.me/91YOURNUMBER?text=" + encodeURIComponent(message),
+    "_blank"
+  );
 }
 </script>
 
