@@ -5,95 +5,198 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EduWarrior Premium</title>
 
-<link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="style.css">
-
+<style>
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background: radial-gradient(circle at top,#0f172a,#020617);
+  color:#fff;
+  text-align:center;
+}
+.container{max-width:900px;margin:auto;padding:40px 20px;}
+.topbar{display:flex;justify-content:space-between;margin-bottom:40px;}
+.logo{font-weight:bold;font-size:20px;}
+.badge{background:#f59e0b;color:#000;padding:4px 8px;border-radius:6px;font-size:12px;margin-left:6px;}
+.hero h1{font-size:40px;margin:15px 0;}
+.hero h1 span{color:#f59e0b;}
+.hero p{opacity:.7;max-width:600px;margin:auto;}
+.card{margin-top:40px;background:rgba(255,255,255,.05);backdrop-filter:blur(15px);
+border-radius:20px;padding:30px;box-shadow:0 0 40px rgba(0,0,0,.6);}
+.tabs{display:flex;border-bottom:1px solid rgba(255,255,255,.1);}
+.tab{flex:1;background:none;border:none;padding:15px;color:#aaa;cursor:pointer;font-weight:600;}
+.tab.active{color:#f59e0b;border-bottom:2px solid #f59e0b;}
+.tab-content{display:none;padding-top:25px;}
+.tab-content.active{display:block;}
+input{width:100%;padding:14px;margin:10px 0;border-radius:10px;border:none;background:#111827;color:#fff;}
+.gold-btn{width:100%;padding:15px;margin-top:15px;border:none;border-radius:12px;
+background:linear-gradient(90deg,#f59e0b,#fbbf24);color:#000;font-weight:bold;cursor:pointer;}
+.upload-box{border:2px dashed rgba(255,255,255,.2);padding:40px;border-radius:15px;cursor:pointer;color:#aaa;}
+.upload-box:hover{border-color:#f59e0b;color:#fff;}
+.alert{background:#3b0a0a;color:#ff6b6b;padding:12px;border-radius:10px;margin-bottom:20px;}
+.hidden{display:none;}
+footer{margin-top:50px;opacity:.5;font-size:13px;}
+</style>
 </head>
 <body>
 
 <div class="container">
 
-  <div class="topbar">
-    <div class="logo">🎓 EduWarrior <span class="badge">PREMIUM</span></div>
-    <div class="admin">Admin</div>
-  </div>
+<div class="topbar">
+<div class="logo">🎓 EduWarrior <span class="badge">PREMIUM</span></div>
+<div>Admin</div>
+</div>
 
-  <div class="hero">
-    <div class="secure-badge">🔐 Secure • Encrypted • Device-Bound</div>
-    <h1>Premium B.Ed <span>Study Materials</span></h1>
-    <p>
-      Access encrypted, device-bound educational content.
-      Your books are secured with military-grade AES-256 encryption.
-    </p>
-  </div>
+<div class="hero">
+<h1>Premium B.Ed <span>Study Materials</span></h1>
+<p>Secure encrypted device-bound educational content.</p>
+</div>
 
-  <div class="card">
+<div class="card">
 
-    <div class="tabs">
-      <button class="tab active" onclick="switchTab('get')">📖 Get Book</button>
-      <button class="tab" onclick="switchTab('open')">🛡 Open Book</button>
-    </div>
+<div class="tabs">
+<button class="tab active" onclick="switchTab('get')">Get Book</button>
+<button class="tab" onclick="switchTab('open')">Open Book</button>
+</div>
 
-    <!-- GET BOOK -->
-    <div id="get" class="tab-content active">
-      <input type="text" id="name" placeholder="Enter your full name">
-      <input type="text" id="phone" placeholder="Enter your phone number">
+<div id="get" class="tab-content active">
+<input type="text" id="name" placeholder="Full Name">
+<input type="text" id="phone" placeholder="Phone Number">
+<button class="gold-btn" onclick="generateFile()">Download Book — ₹149</button>
+<div id="codeDisplay"></div>
+</div>
 
-      <button class="gold-btn" onclick="generateFile()">
-        ⬇ Download Book — ₹149
-      </button>
-
-      <div id="codeDisplay" class="code-box"></div>
-    </div>
-
-    <!-- OPEN BOOK -->
-    <div id="open" class="tab-content">
-
-      <div id="alertBox" class="alert hidden"></div>
-
-      <label class="upload-box">
-        <input type="file" id="fileInput" hidden onchange="openFile()">
-        <div>
-          📄 Open .bedx File<br>
-          <small>Select your downloaded book file</small>
-        </div>
-      </label>
-
-    </div>
-
-  </div>
-
-  <div class="features">
-    <div class="feature">🛡 AES-256 Encrypted</div>
-    <div class="feature">📱 Device Bound</div>
-    <div class="feature">⚡ Instant Access</div>
-  </div>
-
-  <footer>
-    © 2025 EduWarrior Premium. All rights reserved.<br>
-    Secured with Web Crypto API • AES-GCM Encryption
-  </footer>
+<div id="open" class="tab-content">
+<div id="alertBox" class="alert hidden"></div>
+<label class="upload-box">
+<input type="file" id="fileInput" hidden onchange="openFile()">
+📄 Open .bedx File<br>
+<small>Select downloaded file</small>
+</label>
+</div>
 
 </div>
 
-<script src="app.js"></script>
+<footer>
+© 2025 EduWarrior Premium
+</footer>
+
+</div>
 
 <script>
-if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("service-worker.js");
-}
+const MASTER_SECRET="BED_SECRET_2025_PRIVATE";
 
 function switchTab(tab){
-  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-  document.querySelectorAll(".tab-content").forEach(c=>c.classList.remove("active"));
+document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+document.querySelectorAll(".tab-content").forEach(c=>c.classList.remove("active"));
+if(tab==="get"){
+document.querySelectorAll(".tab")[0].classList.add("active");
+document.getElementById("get").classList.add("active");
+}else{
+document.querySelectorAll(".tab")[1].classList.add("active");
+document.getElementById("open").classList.add("active");
+}
+}
 
-  if(tab==="get"){
-    document.querySelectorAll(".tab")[0].classList.add("active");
-    document.getElementById("get").classList.add("active");
-  }else{
-    document.querySelectorAll(".tab")[1].classList.add("active");
-    document.getElementById("open").classList.add("active");
-  }
+function getDeviceID(){
+return btoa(navigator.userAgent+screen.width+screen.height);
+}
+
+function generateCode(){
+let c="";for(let i=0;i<16;i++){c+=Math.floor(Math.random()*10);}
+return c;
+}
+
+async function sha256(text){
+return await crypto.subtle.digest("SHA-256",new TextEncoder().encode(text));
+}
+
+async function generateFile(){
+const name=document.getElementById("name").value;
+const phone=document.getElementById("phone").value;
+if(!name||!phone){alert("Enter details");return;}
+
+const deviceID=getDeviceID();
+const code=generateCode();
+
+const master=await fetch("master.bedx").then(r=>r.text());
+const m=JSON.parse(master);
+
+const masterKey=await crypto.subtle.importKey("raw",
+await sha256(MASTER_SECRET),
+{name:"AES-GCM"},false,["decrypt"]);
+
+const pdf=await crypto.subtle.decrypt(
+{name:"AES-GCM",iv:new Uint8Array(m.iv)},
+masterKey,new Uint8Array(m.data));
+
+const personalKey=await crypto.subtle.importKey("raw",
+await sha256(code+deviceID),
+{name:"AES-GCM"},false,["encrypt"]);
+
+const iv=crypto.getRandomValues(new Uint8Array(12));
+const encrypted=await crypto.subtle.encrypt(
+{name:"AES-GCM",iv},personalKey,pdf);
+
+const fileData={
+iv:Array.from(iv),
+data:Array.from(new Uint8Array(encrypted)),
+code,deviceID,name,phone
+};
+
+const blob=new Blob([JSON.stringify(fileData)],{type:"application/octet-stream"});
+const a=document.createElement("a");
+a.href=URL.createObjectURL(blob);
+a.download="BEd_"+code+".bedx";
+a.click();
+
+document.getElementById("codeDisplay").innerHTML=
+"<br>Your Code: <b>"+code+"</b><br>Send this code to admin & pay ₹149";
+
+window.open(
+"https://wa.me/91YOURNUMBER?text="+encodeURIComponent(
+`Name:${name}\nPhone:${phone}\nCode:${code}\nPaid ₹149`),
+"_blank");
+}
+
+async function openFile(){
+const alertBox=document.getElementById("alertBox");
+alertBox.classList.add("hidden");
+
+const file=document.getElementById("fileInput").files[0];
+if(!file)return;
+
+const json=JSON.parse(await file.text());
+
+if(json.deviceID!==getDeviceID()){
+alertBox.innerText="This file is not for this device.";
+alertBox.classList.remove("hidden");
+return;
+}
+
+const codes=await fetch("codes.json").then(r=>r.json());
+const found=codes.find(c=>c.code.trim()===json.code.trim());
+
+if(!found||!found.approved){
+alertBox.innerText="Payment not approved.";
+alertBox.classList.remove("hidden");
+return;
+}
+
+const key=await crypto.subtle.importKey("raw",
+await sha256(json.code+json.deviceID),
+{name:"AES-GCM"},false,["decrypt"]);
+
+try{
+const decrypted=await crypto.subtle.decrypt(
+{name:"AES-GCM",iv:new Uint8Array(json.iv)},
+key,new Uint8Array(json.data));
+
+const blob=new Blob([decrypted],{type:"application/pdf"});
+window.open(URL.createObjectURL(blob));
+}catch{
+alertBox.innerText="Cannot open this file.";
+alertBox.classList.remove("hidden");
+}
 }
 </script>
 
