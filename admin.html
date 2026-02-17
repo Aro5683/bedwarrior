@@ -2,33 +2,27 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Create Master BEDX</title>
+<title>Admin - Create Master BEDX</title>
 </head>
 <body>
 
-<h2>Admin - Create Master BEDX</h2>
-
-<input type="file" id="pdfFile" accept="application/pdf"><br><br>
-<input type="text" id="masterKey" placeholder="Enter Master Secret Key"><br><br>
-<button onclick="createBedx()">Create BEDX</button>
+<h2>Admin - Upload PDF</h2>
+<input type="file" id="pdfFile" accept="application/pdf">
+<button onclick="createMaster()">Create master.bedx</button>
 
 <script>
-async function createBedx(){
+const MASTER_SECRET = "BED_SECRET_2025_PRIVATE";
+
+async function createMaster(){
 
   const file = document.getElementById("pdfFile").files[0];
-  const secret = document.getElementById("masterKey").value;
+  if(!file){ alert("Upload PDF"); return; }
 
-  if(!file || !secret){
-    alert("Upload PDF and enter master key");
-    return;
-  }
+  const pdfBuffer = await file.arrayBuffer();
 
-  const arrayBuffer = await file.arrayBuffer();
-
-  const encoder = new TextEncoder();
   const keyMaterial = await crypto.subtle.digest(
     "SHA-256",
-    encoder.encode(secret)
+    new TextEncoder().encode(MASTER_SECRET)
   );
 
   const key = await crypto.subtle.importKey(
@@ -44,7 +38,7 @@ async function createBedx(){
   const encrypted = await crypto.subtle.encrypt(
     { name: "AES-GCM", iv },
     key,
-    arrayBuffer
+    pdfBuffer
   );
 
   const bedx = {
@@ -62,7 +56,7 @@ async function createBedx(){
   a.download = "master.bedx";
   a.click();
 
-  alert("master.bedx created.");
+  alert("Upload master.bedx to GitHub");
 }
 </script>
 
