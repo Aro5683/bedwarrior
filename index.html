@@ -12,206 +12,283 @@ body{
   background: radial-gradient(circle at top,#0f172a,#020617);
   color:#fff;
 }
-
 .container{
   max-width:1200px;
   margin:auto;
   padding:50px 20px;
   text-align:center;
 }
-
-h1{
-  font-size:42px;
-  margin-bottom:10px;
-}
-
-h1 span{
-  color:#f59e0b;
-}
-
-.subtitle{
-  opacity:.7;
-  margin-bottom:50px;
-}
-
+h1{font-size:40px;}
+h1 span{color:#f59e0b;}
+.subtitle{opacity:.7;margin-bottom:40px;}
 .pricing{
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
   gap:25px;
 }
-
 .card{
   background:rgba(255,255,255,.05);
   backdrop-filter:blur(15px);
   border-radius:20px;
-  padding:30px;
-  width:260px;
+  padding:25px;
+  width:270px;
   box-shadow:0 0 30px rgba(0,0,0,.5);
   transition:.3s;
-  position:relative;
 }
-
-.card:hover{
-  transform:translateY(-8px);
-}
-
-.popular{
-  border:2px solid #f59e0b;
-}
-
-.popular-badge{
-  position:absolute;
-  top:-12px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#f59e0b;
-  color:#000;
-  padding:6px 12px;
-  font-size:12px;
-  border-radius:20px;
-  font-weight:bold;
-}
-
+.card:hover{transform:translateY(-6px);}
+.popular{border:2px solid #f59e0b;}
 .price{
-  font-size:36px;
-  margin:20px 0;
+  font-size:34px;
+  margin:15px 0;
   color:#f59e0b;
 }
-
 ul{
   list-style:none;
   padding:0;
   text-align:left;
-  margin:20px 0;
+  margin:15px 0;
 }
-
-ul li{
-  margin:10px 0;
-  opacity:.8;
-}
-
+ul li{margin:8px 0;opacity:.8;}
 button{
   width:100%;
   padding:12px;
+  margin-top:10px;
   border:none;
-  border-radius:12px;
-  background:linear-gradient(90deg,#f59e0b,#fbbf24);
-  color:#000;
+  border-radius:10px;
   font-weight:bold;
   cursor:pointer;
-  font-size:15px;
 }
-
-button:hover{
-  opacity:.9;
+.buyBtn{
+  background:linear-gradient(90deg,#f59e0b,#fbbf24);
+  color:#000;
 }
-
+.payBtn{
+  background:#16a34a;
+  color:#fff;
+}
+.whatsappBtn{
+  background:#25D366;
+  color:#fff;
+}
+.downloadBtn{
+  background:#2563eb;
+  color:#fff;
+}
+input{
+  width:100%;
+  padding:10px;
+  margin:6px 0;
+  border-radius:8px;
+  border:none;
+  background:#111827;
+  color:#fff;
+}
+.section{
+  margin-top:60px;
+  max-width:500px;
+  margin-left:auto;
+  margin-right:auto;
+  background:rgba(255,255,255,.05);
+  padding:25px;
+  border-radius:15px;
+}
 footer{
   margin-top:60px;
-  text-align:center;
   opacity:.5;
-  font-size:14px;
 }
-
 @media(max-width:768px){
-  .pricing{
-    flex-direction:column;
-    align-items:center;
-  }
+  .pricing{flex-direction:column;align-items:center;}
 }
 </style>
-
 </head>
 <body>
 
 <div class="container">
 
 <h1>Premium B.Ed <span>Study Packages</span></h1>
-<p class="subtitle">
-Choose your package and unlock secure educational content instantly.
-</p>
+<p class="subtitle">Secure • Device Bound • Encrypted</p>
 
 <div class="pricing">
 
-  <!-- BASIC -->
   <div class="card">
-    <h3>Basic Package</h3>
+    <h3>Basic</h3>
     <div class="price">₹129</div>
     <ul>
       <li>✔ B.Ed Notes</li>
       <li>✔ Important Questions</li>
       <li>✔ Mobile Friendly</li>
-      <li>✖ Circulars</li>
-      <li>✖ Model Question Papers</li>
     </ul>
-    <button onclick="buyPackage('Basic',129)">Get Access</button>
+    <button class="buyBtn" onclick="selectPackage('Basic',129)">Select</button>
   </div>
 
-  <!-- STANDARD -->
   <div class="card">
-    <h3>Standard Package</h3>
+    <h3>Standard</h3>
     <div class="price">₹139</div>
     <ul>
-      <li>✔ B.Ed Notes</li>
-      <li>✔ Important Questions</li>
+      <li>✔ Notes</li>
       <li>✔ Circulars</li>
+      <li>✔ Important Questions</li>
       <li>✔ Mobile Friendly</li>
-      <li>✖ Model Question Papers</li>
     </ul>
-    <button onclick="buyPackage('Standard',139)">Get Access</button>
+    <button class="buyBtn" onclick="selectPackage('Standard',139)">Select</button>
   </div>
 
-  <!-- PREMIUM (MOST POPULAR) -->
   <div class="card popular">
-    <div class="popular-badge">Most Popular</div>
-    <h3>Premium Package</h3>
+    <h3>Premium</h3>
     <div class="price">₹149</div>
     <ul>
-      <li>✔ B.Ed Notes</li>
-      <li>✔ Important Questions</li>
+      <li>✔ Notes</li>
       <li>✔ Circulars</li>
-      <li>✔ Model Question Papers</li>
+      <li>✔ Model Papers</li>
+      <li>✔ Important Questions</li>
       <li>✔ Mobile Friendly</li>
     </ul>
-    <button onclick="buyPackage('Premium',149)">Get Access</button>
+    <button class="buyBtn" onclick="selectPackage('Premium',149)">Select</button>
   </div>
 
-  <!-- ULTIMATE -->
   <div class="card">
-    <h3>Ultimate Package</h3>
+    <h3>Ultimate</h3>
     <div class="price">₹159</div>
     <ul>
-      <li>✔ All Premium Features</li>
-      <li>✔ Bonus Study Materials</li>
+      <li>✔ All Features</li>
+      <li>✔ Bonus Materials</li>
       <li>✔ Future Updates</li>
       <li>✔ Priority Support</li>
-      <li>✔ Mobile Friendly</li>
     </ul>
-    <button onclick="buyPackage('Ultimate',159)">Get Access</button>
+    <button class="buyBtn" onclick="selectPackage('Ultimate',159)">Select</button>
   </div>
 
 </div>
 
+<!-- PURCHASE SECTION -->
+<div class="section">
+
+<h3>Complete Your Purchase</h3>
+
+<input type="text" id="name" placeholder="Enter Full Name">
+<input type="text" id="phone" placeholder="Enter Phone Number">
+
+<p id="selectedInfo"></p>
+
+<button class="payBtn" onclick="payUPI()">Pay via UPI</button>
+<button class="whatsappBtn" onclick="openWhatsApp()">Send Details in WhatsApp</button>
+<button class="downloadBtn" onclick="downloadBedx()">Download .bedx</button>
+
+<p id="codeDisplay"></p>
+
+</div>
+
 <footer>
-© 2025 EduWarrior Premium • Secure • Device Bound • Encrypted
+© 2025 EduWarrior Premium
 </footer>
 
 </div>
 
 <script>
-function buyPackage(packageName, amount){
+let selectedPackage="";
+let selectedAmount=0;
+let generatedCode="";
 
-  const message = 
+function selectPackage(name, amount){
+  selectedPackage=name;
+  selectedAmount=amount;
+  document.getElementById("selectedInfo").innerText=
+  "Selected: "+name+" - ₹"+amount;
+}
+
+function generateCode(){
+  let c="";
+  for(let i=0;i<16;i++){c+=Math.floor(Math.random()*10);}
+  return c;
+}
+
+function payUPI(){
+  if(!selectedPackage){alert("Select package first");return;}
+  const upi="upi://pay?pa=9629981854@paytm&pn=EduWarrior&am="+selectedAmount+"&cu=INR";
+  window.location.href=upi;
+}
+
+function openWhatsApp(){
+  const name=document.getElementById("name").value;
+  const phone=document.getElementById("phone").value;
+
+  if(!name||!phone||!selectedPackage){
+    alert("Fill details & select package");
+    return;
+  }
+
+  if(!generatedCode){
+    generatedCode=generateCode();
+    document.getElementById("codeDisplay").innerHTML=
+    "<br>Your Code: <b>"+generatedCode+"</b><br>After payment, send this code.";
+  }
+
+  const message=
 `Hello Admin,
-I want to purchase ${packageName} Package.
-Amount: ₹${amount}
-Please share payment details.`;
+Name: ${name}
+Phone: ${phone}
+Package: ${selectedPackage}
+Amount: ₹${selectedAmount}
+Code: ${generatedCode}
+I have paid via UPI.`;
 
   window.open(
-    "https://wa.me/91YOURNUMBER?text=" + encodeURIComponent(message),
-    "_blank"
+  "https://wa.me/91YOURNUMBER?text="+encodeURIComponent(message),
+  "_blank");
+}
+
+async function downloadBedx(){
+
+  if(!generatedCode){
+    alert("Generate code first (Click WhatsApp button)");
+    return;
+  }
+
+  const name=document.getElementById("name").value;
+  const phone=document.getElementById("phone").value;
+
+  const deviceID=btoa(navigator.userAgent+screen.width);
+
+  const master=await fetch("master.bedx").then(r=>r.text());
+  const m=JSON.parse(master);
+
+  const keyMaterial=await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(generatedCode+deviceID)
   );
+
+  const key=await crypto.subtle.importKey(
+    "raw",
+    keyMaterial,
+    {name:"AES-GCM"},
+    false,
+    ["encrypt"]
+  );
+
+  const iv=crypto.getRandomValues(new Uint8Array(12));
+
+  const encrypted=await crypto.subtle.encrypt(
+    {name:"AES-GCM",iv},
+    key,
+    new Uint8Array(m.data)
+  );
+
+  const fileData={
+    iv:Array.from(iv),
+    data:Array.from(new Uint8Array(encrypted)),
+    code:generatedCode,
+    deviceID,
+    name,
+    phone,
+    package:selectedPackage
+  };
+
+  const blob=new Blob([JSON.stringify(fileData)]);
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="BEd_"+generatedCode+".bedx";
+  a.click();
 }
 </script>
 
