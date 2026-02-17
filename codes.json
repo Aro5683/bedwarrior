@@ -1,10 +1,4 @@
 [
-  {
-    "code": "8392746150293847",
-    "approved": false
-  },
-  {
-    "code": "12345678",
-    "approved": true
-  }
+  { "code": "8392746150293847", "approved": false },
+  { "code": "4729018364750291", "approved": false }
 ]
