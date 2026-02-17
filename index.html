@@ -320,10 +320,19 @@ async function downloadBedx(){
     return;
   }
 
-  const codes=await fetch("codes.json").then(r=>r.json());
+  // 🔥 Instant approval check (RAW + no cache)
+  const codes=await fetch(
+    "https://raw.githubusercontent.com/Aro5683/bedwarrior/main/codes.json?nocache=" + Date.now()
+  ).then(r=>r.json());
+
   const found=codes.find(c=>c.code.trim()===json.code.trim());
 
-  if(!found||!found.approved){
+  if(!found){
+    alertBox.innerText="Invalid code.";
+    return;
+  }
+
+  if(!found.approved){
     alertBox.innerText="Payment not approved yet.";
     return;
   }
@@ -342,7 +351,6 @@ async function downloadBedx(){
   );
 
   try{
-
     const decrypted=await crypto.subtle.decrypt(
       {name:"AES-GCM",iv:new Uint8Array(json.iv)},
       key,
@@ -359,6 +367,7 @@ async function downloadBedx(){
     alertBox.innerText="Cannot open this file.";
   }
 }
+
 
 </script>
 
