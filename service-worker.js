@@ -4,8 +4,8 @@ self.addEventListener("install", e=>{
       return cache.addAll([
         "index.html",
         "app.js",
-        "master.bedx",
-        "codes.json"
+        "master.bedx"
+        
       ]);
     })
   );
