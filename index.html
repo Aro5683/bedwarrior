@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EduWarrior Premium</title>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
 <style>
 body{
   margin:0;
@@ -14,88 +16,112 @@ body{
   text-align:center;
 }
 .container{max-width:900px;margin:auto;padding:40px 20px;}
-.topbar{display:flex;justify-content:space-between;margin-bottom:40px;}
-.logo{font-weight:bold;font-size:20px;}
-.badge{background:#f59e0b;color:#000;padding:4px 8px;border-radius:6px;font-size:12px;margin-left:6px;}
-.hero h1{font-size:40px;margin:15px 0;}
-.hero h1 span{color:#f59e0b;}
-.hero p{opacity:.7;max-width:600px;margin:auto;}
-.card{margin-top:40px;background:rgba(255,255,255,.05);backdrop-filter:blur(15px);
-border-radius:20px;padding:30px;box-shadow:0 0 40px rgba(0,0,0,.6);}
-.tabs{display:flex;border-bottom:1px solid rgba(255,255,255,.1);}
-.tab{flex:1;background:none;border:none;padding:15px;color:#aaa;cursor:pointer;font-weight:600;}
-.tab.active{color:#f59e0b;border-bottom:2px solid #f59e0b;}
-.tab-content{display:none;padding-top:25px;}
-.tab-content.active{display:block;}
-input{width:100%;padding:14px;margin:10px 0;border-radius:10px;border:none;background:#111827;color:#fff;}
-.gold-btn{width:100%;padding:15px;margin-top:15px;border:none;border-radius:12px;
-background:linear-gradient(90deg,#f59e0b,#fbbf24);color:#000;font-weight:bold;cursor:pointer;}
-.upload-box{border:2px dashed rgba(255,255,255,.2);padding:40px;border-radius:15px;cursor:pointer;color:#aaa;}
-.upload-box:hover{border-color:#f59e0b;color:#fff;}
-.alert{background:#3b0a0a;color:#ff6b6b;padding:12px;border-radius:10px;margin-bottom:20px;}
+.hero h1{font-size:38px;}
+.hero span{color:#f59e0b;}
+.card{
+  background:rgba(255,255,255,.05);
+  padding:30px;
+  border-radius:20px;
+  margin-top:30px;
+}
+input{
+  width:100%;
+  padding:14px;
+  margin:10px 0;
+  border-radius:10px;
+  border:none;
+  background:#111827;
+  color:#fff;
+}
+button{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(90deg,#f59e0b,#fbbf24);
+  color:#000;
+  font-weight:bold;
+  cursor:pointer;
+}
+.upload-box{
+  border:2px dashed rgba(255,255,255,.2);
+  padding:40px;
+  border-radius:15px;
+  cursor:pointer;
+  margin-top:15px;
+}
+.alert{
+  background:#3b0a0a;
+  color:#ff6b6b;
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:15px;
+}
+#viewer{
+  margin-top:30px;
+  position:relative;
+}
+canvas{
+  max-width:100%;
+  margin-bottom:20px;
+}
+.watermark{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:40px;
+  color:rgba(255,255,255,0.08);
+  transform:rotate(-30deg);
+}
 .hidden{display:none;}
-footer{margin-top:50px;opacity:.5;font-size:13px;}
 </style>
 </head>
 <body>
 
 <div class="container">
 
-<div class="topbar">
-<div class="logo">🎓 EduWarrior <span class="badge">PREMIUM</span></div>
-<div>Admin</div>
-</div>
-
 <div class="hero">
 <h1>Premium B.Ed <span>Study Materials</span></h1>
-<p>Secure encrypted device-bound educational content.</p>
+<p>Secure • Encrypted • Device-Bound</p>
 </div>
 
 <div class="card">
 
-<div class="tabs">
-<button class="tab active" onclick="switchTab('get')">Get Book</button>
-<button class="tab" onclick="switchTab('open')">Open Book</button>
-</div>
-
-<div id="get" class="tab-content active">
+<h3>Get Book - ₹149</h3>
 <input type="text" id="name" placeholder="Full Name">
 <input type="text" id="phone" placeholder="Phone Number">
-<button class="gold-btn" onclick="generateFile()">Download Book — ₹149</button>
+<button onclick="generateFile()">Download Book</button>
 <div id="codeDisplay"></div>
-</div>
 
-<div id="open" class="tab-content">
+<hr style="margin:30px 0;opacity:.2">
+
+<h3>Open Book</h3>
 <div id="alertBox" class="alert hidden"></div>
+
 <label class="upload-box">
 <input type="file" id="fileInput" hidden onchange="openFile()">
-📄 Open .bedx File<br>
-<small>Select downloaded file</small>
+Select .bedx File
 </label>
-</div>
 
 </div>
 
-<footer>
-© 2025 EduWarrior Premium
-</footer>
+<div id="viewer"></div>
 
 </div>
 
 <script>
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
 const MASTER_SECRET="BED_SECRET_2025_PRIVATE";
 
-function switchTab(tab){
-document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-document.querySelectorAll(".tab-content").forEach(c=>c.classList.remove("active"));
-if(tab==="get"){
-document.querySelectorAll(".tab")[0].classList.add("active");
-document.getElementById("get").classList.add("active");
-}else{
-document.querySelectorAll(".tab")[1].classList.add("active");
-document.getElementById("open").classList.add("active");
-}
-}
+document.addEventListener("contextmenu", e=>e.preventDefault());
 
 function getDeviceID(){
 return btoa(navigator.userAgent+screen.width+screen.height);
@@ -150,7 +176,7 @@ a.download="BEd_"+code+".bedx";
 a.click();
 
 document.getElementById("codeDisplay").innerHTML=
-"<br>Your Code: <b>"+code+"</b><br>Send this code to admin & pay ₹149";
+"<br>Your Code: <b>"+code+"</b><br>Send to admin & pay ₹149";
 
 window.open(
 "https://wa.me/91YOURNUMBER?text="+encodeURIComponent(
@@ -159,6 +185,7 @@ window.open(
 }
 
 async function openFile(){
+
 const alertBox=document.getElementById("alertBox");
 alertBox.classList.add("hidden");
 
@@ -186,17 +213,46 @@ const key=await crypto.subtle.importKey("raw",
 await sha256(json.code+json.deviceID),
 {name:"AES-GCM"},false,["decrypt"]);
 
+let decrypted;
 try{
-const decrypted=await crypto.subtle.decrypt(
+decrypted=await crypto.subtle.decrypt(
 {name:"AES-GCM",iv:new Uint8Array(json.iv)},
 key,new Uint8Array(json.data));
-
-const blob=new Blob([decrypted],{type:"application/pdf"});
-window.open(URL.createObjectURL(blob));
 }catch{
 alertBox.innerText="Cannot open this file.";
 alertBox.classList.remove("hidden");
+return;
 }
+
+renderPDF(new Uint8Array(decrypted), json);
+}
+
+async function renderPDF(data, json){
+
+const viewer=document.getElementById("viewer");
+viewer.innerHTML="";
+
+const loadingTask=pdfjsLib.getDocument({data});
+const pdf=await loadingTask.promise;
+
+for(let pageNum=1;pageNum<=pdf.numPages;pageNum++){
+const page=await pdf.getPage(pageNum);
+const viewport=page.getViewport({scale:1.3});
+
+const canvas=document.createElement("canvas");
+const context=canvas.getContext("2d");
+canvas.height=viewport.height;
+canvas.width=viewport.width;
+
+viewer.appendChild(canvas);
+
+await page.render({canvasContext:context,viewport}).promise;
+}
+
+const watermark=document.createElement("div");
+watermark.className="watermark";
+watermark.innerText=`${json.name} | ${json.phone} | ${json.code}`;
+viewer.appendChild(watermark);
 }
 </script>
 
